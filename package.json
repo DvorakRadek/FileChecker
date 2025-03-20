@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "file-checker": "npx tsx index.ts"
+    "file-checker": "index.js"
   },
   "repository": {
     "type": "git",
@@ -25,8 +25,5 @@
   "bugs": {
     "url": "https://github.com/DvorakRadek/FileChecker/issues"
   },
-  "homepage": "https://github.com/DvorakRadek/FileChecker#readme",
-  "devDependencies": {
-    "tsx": "^4.19.3"
-  }
+  "homepage": "https://github.com/DvorakRadek/FileChecker#readme"
 }
