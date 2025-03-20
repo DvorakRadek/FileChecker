@@ -1,0 +1,29 @@
+{
+  "name": "file-checker",
+  "version": "1.0.0",
+  "description": "Search for suspicious piece of code in your files",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DvorakRadek/FileChecker.git"
+  },
+  "keywords": [
+    "file",
+    "checker",
+    "suspicious",
+    "code"
+  ],
+  "author": "DvorakRadek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DvorakRadek/FileChecker/issues"
+  },
+  "homepage": "https://github.com/DvorakRadek/FileChecker#readme",
+  "devDependencies": {
+    "tsx": "^4.19.3"
+  }
+}
