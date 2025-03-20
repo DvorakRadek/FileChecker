@@ -4,6 +4,7 @@
 ## Installation
 - git clone https://github.com/DvorakRadek/FileChecker.git
 - cd FileChecker
-- npm install
 - npm install -g
+
+## Run
 - file-checker
