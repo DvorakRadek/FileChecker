@@ -7,4 +7,4 @@
 - npm install -g
 
 ## Run
-- file-checker
+- execute **file-checker**
