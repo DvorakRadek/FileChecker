@@ -10,6 +10,13 @@ export const getNameOfParentDirectory = (path) => {
   return pathArray.at(-1);
 }
 
-export const arrayFromString = (string) => {
-  return string.split(' ');
+export const createOutput = (stdout) => {
+  const output = [];
+  const stdoutArray = stdout.trim().split('\r\n');
+  stdoutArray.forEach(file => {
+    if (!output.includes(file)) {
+      output.push(file);
+    };
+  });
+  return output;
 }

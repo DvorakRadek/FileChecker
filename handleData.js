@@ -1,23 +1,40 @@
 import { access, writeFile, readFile } from 'node:fs';
 import { getNameOfParentDirectory } from './helpers.js';
 
-export const handleFileList = (newFiles, directory, email) => {
-  const fileName = `${getNameOfParentDirectory(directory)}-suspicious-files.txt`;
+export const handleFileList = (newResultContent, directory, email) => {
+  const resultFileName = `${getNameOfParentDirectory(directory)}-suspicious-files.txt`;
 
-  access(fileName, (err) => {
-    console.log(`${fileName} ${err ? 'does not exist' : 'already exists'}`);
+  access(resultFileName, (err) => {
+    console.log(`${resultFileName} ${err ? 'does not exist' : 'already exists'}`);
     if (err) {
-      writeFile(fileName, newFiles, (err) => {
+      writeFile(resultFileName, newResultContent.join('\n'), (err) => {
         if (err) throw err;
       });
       console.log('file created');
-      // more logic what to do if file does not exist
+
+      // create email content with file names (newResultContent)
+      // send email
     } else {
-      readFile(fileName, 'utf-8', (err, data) => {
+      readFile(resultFileName, 'utf-8', (err, data) => {
         if (err) throw err;
-        console.log('data: ', data.trim().split('\r\n'));
+        
+        const previousResultContent = data.split('\n');
+        const diff = newResultContent.filter(file => !previousResultContent.includes(file));
+        console.log('diff: ', diff.join('\n'));
+
+        if (diff.length === 0) {
+          console.log('No new files found');
+          return;
+        }
+
+        writeFile(resultFileName, newResultContent.join('\n'), (err) => {
+          if (err) throw err;
+          console.log('file updated');
         });
-      // more logic what to do if file exists
+
+        // create email content with file names (diff.join('\n'))
+        // send email
+      });
     }
   });
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { exec } from 'child_process';
-import { printHelpAndExit } from './helpers.js';
+import { printHelpAndExit, createOutput } from './helpers.js';
 import { handleFileList } from './handleData.js';
 
 export const checkFiles = () => {
@@ -19,6 +19,9 @@ export const checkFiles = () => {
   //   printHelpAndExit();
   // }
 
+
+  // add executing function periodically
+
   exec(command, (error, stdout, stderr) => {
     if (error) {
         console.log(`error: ${error.message}`);
@@ -32,7 +35,8 @@ export const checkFiles = () => {
       console.log('No files found');
       return;
     }
-    handleFileList(stdout, directory, email);
+    const output = createOutput(stdout);
+    handleFileList(output, directory, email);
 });
 }
 
