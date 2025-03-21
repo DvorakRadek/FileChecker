@@ -1,3 +1,4 @@
+import nodemailer, { SentMessageInfo } from 'nodemailer';
 import { access, readFile, writeFile, rm } from 'fs';
 
 export const createEmailContent = (files) => {

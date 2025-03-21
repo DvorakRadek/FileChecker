@@ -32,8 +32,6 @@ export const handleFileList = (newResultContent, directory, email) => {
         });
 
         createEmailContentFile(diff);
-
-        // create email content with file names (diff.join('\n'))
         // send email
       });
     }
