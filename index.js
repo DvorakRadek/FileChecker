@@ -3,6 +3,7 @@
 import { exec } from 'child_process';
 import { printHelpAndExit, createOutput } from './helpers.js';
 import { handleFileList } from './handleData.js';
+import { deleteEmailContentFile } from './handleEmail.js';
 
 export const checkFiles = () => {
   // const directory = process.argv[2];
@@ -37,7 +38,9 @@ export const checkFiles = () => {
     }
     const output = createOutput(stdout);
     handleFileList(output, directory, email);
-});
+  });
 }
 
 checkFiles();
+deleteEmailContentFile();
+// send email and delete email-content.txt

@@ -1,5 +1,6 @@
 import { access, writeFile, readFile } from 'node:fs';
 import { getNameOfParentDirectory } from './helpers.js';
+import { createEmailContentFile } from './handleEmail.js';
 
 export const handleFileList = (newResultContent, directory, email) => {
   const resultFileName = `${getNameOfParentDirectory(directory)}-suspicious-files.txt`;
@@ -11,16 +12,14 @@ export const handleFileList = (newResultContent, directory, email) => {
         if (err) throw err;
       });
       console.log('file created');
-
-      // create email content with file names (newResultContent)
+      createEmailContentFile(newResultContent);
       // send email
     } else {
       readFile(resultFileName, 'utf-8', (err, data) => {
         if (err) throw err;
-        
+
         const previousResultContent = data.split('\n');
         const diff = newResultContent.filter(file => !previousResultContent.includes(file));
-        console.log('diff: ', diff.join('\n'));
 
         if (diff.length === 0) {
           console.log('No new files found');
@@ -31,6 +30,8 @@ export const handleFileList = (newResultContent, directory, email) => {
           if (err) throw err;
           console.log('file updated');
         });
+
+        createEmailContentFile(diff);
 
         // create email content with file names (diff.join('\n'))
         // send email
