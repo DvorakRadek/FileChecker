@@ -1,18 +1,21 @@
 import { access, readFile, writeFile, rm } from 'fs';
+import { join } from 'node:path';
 
 export const createEmailContent = (files) => {
   return `New suspicious files found:\n${files.join('\n')}`;
 }
 
 export const createEmailContentFile = (fileContent) => {
-  access('email-content.txt', (err) => {
+  const tempDir = process.env.TEMP
+  const emailContentFile = join(tempDir, 'Filechecker', 'email-content.txt');
+  access(emailContentFile, (err) => {
     if (err) {
-      writeFile('email-content.txt', fileContent.join('\n'), (err) => {
+      writeFile(emailContentFile, fileContent.join('\n'), (err) => {
         if (err) throw err;
       });
       console.log('email content file created');
     } else {
-      readFile('email-content.txt', 'utf-8', (err, data) => {
+      readFile(emailContentFile, 'utf-8', (err, data) => {
         if (err) throw err;
 
         const emailContent = data.split('\n');
@@ -22,7 +25,7 @@ export const createEmailContentFile = (fileContent) => {
         }
         emailContent.push(...diff);
         
-        writeFile('email-content.txt', emailContent.join('\n'), (err) => {
+        writeFile(emailContentFile, emailContent.join('\n'), (err) => {
           if (err) throw err;
         });
         console.log('email content file updated');
@@ -32,11 +35,14 @@ export const createEmailContentFile = (fileContent) => {
 }
 
 export const deleteEmailContentFile = () => {
-  access('email-content.txt', (err) => {
+  const tempDir = process.env.TEMP
+  const emailContentFile = join(tempDir, 'Filechecker', 'email-content.txt');
+  
+  access(emailContentFile, (err) => {
     if (err) {
       console.log('email content file does not exist');
     } else {
-      rm('email-content.txt', (err) => {
+      rm(emailContentFile, (err) => {
         if (err) throw err;
       });
       console.log('email content file deleted');
