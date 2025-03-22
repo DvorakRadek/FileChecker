@@ -1,9 +1,9 @@
 import { access, writeFile, readFile } from 'node:fs';
-import { getNameOfParentDirectory } from './helpers.js';
+import CryptoJS from 'crypto-js';
 import { createEmailContentFile } from './handleEmail.js';
 
 export const handleFileList = (newResultContent, directory, email) => {
-  const resultFileName = `${getNameOfParentDirectory(directory)}-suspicious-files.txt`;
+  const resultFileName = `${CryptoJS.MD5(directory).toString()}.txt`;
 
   access(resultFileName, (err) => {
     console.log(`${resultFileName} ${err ? 'does not exist' : 'already exists'}`);

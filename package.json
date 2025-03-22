@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/DvorakRadek/FileChecker/issues"
   },
-  "homepage": "https://github.com/DvorakRadek/FileChecker#readme"
+  "homepage": "https://github.com/DvorakRadek/FileChecker#readme",
+  "dependencies": {
+    "crypto-js": "^4.2.0"
+  }
 }

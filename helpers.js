@@ -5,11 +5,6 @@ export const printHelpAndExit = () => {
   process.exit(1);
 };
 
-export const getNameOfParentDirectory = (path) => {
-  const pathArray = path.split('/');
-  return pathArray.at(-1);
-}
-
 export const createOutput = (stdout) => {
   const output = [];
   const stdoutArray = stdout.trim().split('\r\n');
