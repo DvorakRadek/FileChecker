@@ -1,9 +1,21 @@
-import { access, writeFile, readFile } from 'node:fs';
+import { access, writeFile, readFile, mkdir } from 'node:fs';
 import { join } from 'node:path';
 import CryptoJS from 'crypto-js';
 import { createEmailContentFile } from './handleEmail.js';
 
 export const handleFileList = (newResultContent, directory, email) => {
+  access(`${process.env.TEMP}/Filechecker`, (err) => {
+    if (err) {
+      console.log('Directory does not exist');
+      mkdir(`${process.env.TEMP}/Filechecker`, { recursive: true }, (err) => {
+        if (err) throw err;
+      });
+    } else {
+      console.log('Directory exists');
+      return;
+    }
+  });
+  
   const resultFileName = join(process.env.TEMP, 'Filechecker', `${CryptoJS.MD5(directory).toString()}.txt`);
   
   access(resultFileName, (err) => {
