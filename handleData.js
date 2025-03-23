@@ -4,11 +4,8 @@ import CryptoJS from 'crypto-js';
 import { createEmailContentFile } from './handleEmail.js';
 
 export const handleFileList = (newResultContent, directory, email) => {
-  const tempDir = process.env.TEMP
-  const resultFileName = join(tempDir, 'Filechecker', `${CryptoJS.MD5(directory).toString()}.txt`);
-  console.log(resultFileName);
-  process.exit(1);
-
+  const resultFileName = join(process.env.TEMP, 'Filechecker', `${CryptoJS.MD5(directory).toString()}.txt`);
+  
   access(resultFileName, (err) => {
     console.log(`${resultFileName} ${err ? 'does not exist' : 'already exists'}`);
     if (err) {

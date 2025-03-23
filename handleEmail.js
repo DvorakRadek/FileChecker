@@ -5,9 +5,9 @@ export const createEmailContent = (files) => {
   return `New suspicious files found:\n${files.join('\n')}`;
 }
 
+const emailContentFile = join(process.env.TEMP, 'Filechecker', 'email-content.txt');
+
 export const createEmailContentFile = (fileContent) => {
-  const tempDir = process.env.TEMP
-  const emailContentFile = join(tempDir, 'Filechecker', 'email-content.txt');
   access(emailContentFile, (err) => {
     if (err) {
       writeFile(emailContentFile, fileContent.join('\n'), (err) => {
@@ -35,9 +35,6 @@ export const createEmailContentFile = (fileContent) => {
 }
 
 export const deleteEmailContentFile = () => {
-  const tempDir = process.env.TEMP
-  const emailContentFile = join(tempDir, 'Filechecker', 'email-content.txt');
-  
   access(emailContentFile, (err) => {
     if (err) {
       console.log('email content file does not exist');
