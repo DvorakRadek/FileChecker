@@ -1,10 +1,11 @@
 import { access, writeFile, readFile } from 'node:fs';
+import { join } from 'node:path';
 import CryptoJS from 'crypto-js';
 import { createEmailContentFile } from './handleEmail.js';
 
 export const handleFileList = (newResultContent, directory, email) => {
-  const resultFileName = `${CryptoJS.MD5(directory).toString()}.txt`;
-
+  const resultFileName = join(process.env.TEMP, 'Filechecker', `${CryptoJS.MD5(directory).toString()}.txt`);
+  
   access(resultFileName, (err) => {
     console.log(`${resultFileName} ${err ? 'does not exist' : 'already exists'}`);
     if (err) {
