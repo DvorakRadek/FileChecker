@@ -1,5 +1,5 @@
 export const printHelpAndExit = () => {
-  console.error(`Usage:\ncheck-files 'path/to/your/directory' 'searched expression' 'email'\tor\tcheck-files --stop`);
+  console.error(`Usage:\ncheck-files 'path/to/your/directory' 'searched expression' 'email'\tor\tcheck-files --stop all`);
   console.error('Will find searched expression in all php files of provided directory and send them to email. Will be executed every day until stopped with --stop flag.');
   process.exit(1);
 };

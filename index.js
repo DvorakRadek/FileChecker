@@ -49,7 +49,7 @@ const scheduleSendEmail = cron.schedule('0 14 * * *', () => {
 
 if (process.argv[2] === '--help' || !process.argv[2]) {
   printHelpAndExit();
-} else if (process.argv[2] === '--stop') {
+} else if (process.argv[2] === '--stop' && process.argv[3] === 'all') {
   scheduleCheckFiles.stop();
   scheduleSendEmail.stop();
   process.exit(0);
