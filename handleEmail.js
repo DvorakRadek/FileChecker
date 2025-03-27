@@ -47,3 +47,8 @@ export const deleteEmailContentFile = () => {
     }
   })
 }
+
+export const sendEmail = () => {
+  console.log('email sent');
+  deleteEmailContentFile();
+}
