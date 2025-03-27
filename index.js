@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import cron from 'node-cron';
 import { exec } from 'child_process';
 import { printHelpAndExit, createOutput } from './helpers.js';
 import { handleFileList } from './handleData.js';
@@ -39,24 +38,8 @@ const checkFiles = () => {
   });
 }
 
-const scheduleCheckFiles = cron.schedule('0 13 * * *', () => {
-    checkFiles();
-  });
-
-const scheduleSendEmail = cron.schedule('0 14 * * *', () => {
-  sendEmail();
-});
-
-if (process.argv[2] === '--help' || !process.argv[2]) {
-  printHelpAndExit();
-} else if (process.argv[2] === '--stop' && process.argv[3] === 'all') {
-  scheduleCheckFiles.stop();
-  scheduleSendEmail.stop();
-  process.exit(0);
-} else {
-  scheduleCheckFiles.start();
-  scheduleSendEmail.start();
-}
-
-// TBD: split into multiple jobs - different folders, different expressions, different emails
-// --stop specific job or --stop all
+// if (process.argv[2] === '--help' || !process.argv[2]) {
+//   printHelpAndExit();
+// }
+ 
+checkFiles();

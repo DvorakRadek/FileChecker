@@ -1,7 +1,7 @@
 import { access, writeFile, readFile, mkdir } from 'node:fs';
 import { join } from 'node:path';
 import CryptoJS from 'crypto-js';
-import { createEmailContentFile } from './handleEmail.js';
+import { sendEmail } from './handleEmail.js';
 
 export const handleFileList = (newResultContent, directory, email) => {
   access(`${process.env.TEMP}/Filechecker`, (err) => {
@@ -20,13 +20,13 @@ export const handleFileList = (newResultContent, directory, email) => {
   
   access(resultFileName, (err) => {
     console.log(`${resultFileName} ${err ? 'does not exist' : 'already exists'}`);
+
     if (err) {
       writeFile(resultFileName, newResultContent.join('\n'), (err) => {
         if (err) throw err;
       });
       console.log('file created');
-      createEmailContentFile(newResultContent);
-      // send email
+      sendEmail(newResultContent, email);
     } else {
       readFile(resultFileName, 'utf-8', (err, data) => {
         if (err) throw err;
@@ -44,8 +44,7 @@ export const handleFileList = (newResultContent, directory, email) => {
           console.log('file updated');
         });
 
-        createEmailContentFile(diff);
-        // send email
+        sendEmail(diff, email);
       });
     }
   });
