@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
+import cron from 'node-cron';
 import { exec } from 'child_process';
 import { printHelpAndExit, createOutput } from './helpers.js';
 import { handleFileList } from './handleData.js';
-import { deleteEmailContentFile } from './handleEmail.js';
 import { localConfig } from './config-local.js';
 
-export const checkFiles = () => {
+const checkFiles = () => {
   // const directory = process.argv[2];
   // const searchingExpression = process.argv[3];
   // const email = process.argv[4];
@@ -17,9 +17,9 @@ export const checkFiles = () => {
   const email = localConfig.email;
   const command = localConfig.command;
 
-  if (process.argv.length < 5) {
-    printHelpAndExit();
-  }
+  // if (process.argv.length < 5) {
+  //   printHelpAndExit();
+  // }
 
   exec(command, (error, stdout, stderr) => {
     if (error) {
@@ -39,5 +39,24 @@ export const checkFiles = () => {
   });
 }
 
-checkFiles();
-// deleteEmailContentFile();
+const scheduleCheckFiles = cron.schedule('0 13 * * *', () => {
+    checkFiles();
+  });
+
+const scheduleSendEmail = cron.schedule('0 14 * * *', () => {
+  sendEmail();
+});
+
+if (process.argv[2] === '--help' || !process.argv[2]) {
+  printHelpAndExit();
+} else if (process.argv[2] === '--stop' && process.argv[3] === 'all') {
+  scheduleCheckFiles.stop();
+  scheduleSendEmail.stop();
+  process.exit(0);
+} else {
+  scheduleCheckFiles.start();
+  scheduleSendEmail.start();
+}
+
+// TBD: split into multiple jobs - different folders, different expressions, different emails
+// --stop specific job or --stop all

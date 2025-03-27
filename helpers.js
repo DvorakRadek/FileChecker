@@ -1,7 +1,6 @@
 export const printHelpAndExit = () => {
-  console.error('Invalid number of parameters!');
-  console.error(`Usage: check-files 'path/to/your/directory' 'searching expression' 'email'`);
-  console.error('Will find searching expression in all php files in the directory and send them to email');
+  console.error(`Usage:\ncheck-files 'path/to/your/directory' 'searched expression' 'email'\tor\tcheck-files --stop all`);
+  console.error('Will find searched expression in all php files of provided directory and send them to email. Will be executed every day until stopped with --stop flag.');
   process.exit(1);
 };
 
