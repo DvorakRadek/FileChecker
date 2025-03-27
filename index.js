@@ -4,6 +4,7 @@ import cron from 'node-cron';
 import { exec } from 'child_process';
 import { printHelpAndExit, createOutput } from './helpers.js';
 import { handleFileList } from './handleData.js';
+import { localConfig } from './config-local.js';
 
 const checkFiles = () => {
   // const directory = process.argv[2];
@@ -11,11 +12,10 @@ const checkFiles = () => {
   // const email = process.argv[4];
   // const command = `cd ${directory} && grep -i -lr --include=*.php ${searchingExpression}`;
 
-  // test settings
-  const directory = 'C:/Users/Radek/Desktop/Práce/Projekty/P3D'
-  const searchingExpression = 'row';
-  const command = `powershell -Command "Set-Location -Path '${directory}'; Get-ChildItem -Recurse -Include *.tsx | Select-String -Pattern '${searchingExpression}' | Select-Object -ExpandProperty Path"`;
-  const email = 'test@test.com';
+  // test settings:
+  const directory = localConfig.directory;
+  const email = localConfig.email;
+  const command = localConfig.command;
 
   // if (process.argv.length < 5) {
   //   printHelpAndExit();
