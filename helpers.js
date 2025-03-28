@@ -1,11 +1,5 @@
 import { type } from 'node:os';
 
-export const printHelpAndExit = () => {
-  console.error(`Usage:\ncheck-files 'path/to/your/directory' 'searched expression' 'email'`);
-  console.error('Will find searched expression in all php files of provided directory and send them to email.');
-  process.exit(1);
-};
-
 export const createOutput = (stdout) => {
   const output = [];
   const stdoutArray = stdout.trim().split('\r\n');
