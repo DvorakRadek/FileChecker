@@ -22,4 +22,12 @@ export const getIp = async () => {
   }
 }
 
-export const operatingSystem = type();
+const getOperatingSystem = () => {
+  const type = type();
+  if (type === 'Darwin' || type === 'Linux') {
+    return 'Unix';
+  }
+  return type;
+}
+
+export const operatingSystem = getOperatingSystem();

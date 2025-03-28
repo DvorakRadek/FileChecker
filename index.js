@@ -12,8 +12,7 @@ const checkFiles = () => {
 
   const command = {
     Windows_NT: `powershell -Command "Set-Location -Path ${input.path}; Get-ChildItem -Recurse -Include *.php | Select-String -Pattern ${input.expression} | Select-Object -ExpandProperty Path"`,
-    Linux: `cd ${input.path} && grep -i -lr --include=*.php ${input.expression}`,
-    Darwin: `cd ${input.path} && grep -i -lr --include=*.php ${input.expression}`,
+    Unix: `cd ${input.path} && grep -i -lr --include=*.php ${input.expression}`,
   }
 
   exec(command[operatingSystem], (error, stdout, stderr) => {

@@ -8,27 +8,7 @@ export const sendEmail = async (files, input) => {
     const emailContent = `New suspicious files found:\n${files.join('\n')}`;
 
     const send = {
-      Darwin: () => {
-        let transporter = nodemailer.createTransport({
-          sendmail: true,
-          newline: 'unix',
-          path: '/usr/sbin/sendmail'
-      });
-  
-      transporter.sendMail({
-          from: `sender@${ip}`,
-          to: input.email,
-          subject: 'Message',
-          text: emailContent
-      }, (err, info) => {
-          if (err) {
-              console.log(err);
-          }
-          console.log(info);
-      });
-      console.log('email sent');
-      },
-      Linux: () => {
+      Unix: () => {
         let transporter = nodemailer.createTransport({
           sendmail: true,
           newline: 'unix',
