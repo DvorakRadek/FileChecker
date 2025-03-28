@@ -64,7 +64,12 @@ export const sendEmail = async (files, input) => {
           to: input.email,
           subject: 'New Suspicious Files Found',
           text: emailContent,
-      });
+      }, (err, info) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log(info);
+    });
       console.log('email sent');
       }
     }
