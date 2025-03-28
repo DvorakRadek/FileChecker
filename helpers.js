@@ -23,11 +23,11 @@ export const getIp = async () => {
 }
 
 const getOperatingSystem = () => {
-  const type = type();
-  if (type === 'Darwin' || type === 'Linux') {
+  const osType = type();
+  if (osType === 'Darwin' || osType === 'Linux') {
     return 'Unix';
   }
-  return type;
+  return osType;
 }
 
 export const operatingSystem = getOperatingSystem();
