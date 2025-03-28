@@ -9,9 +9,14 @@ import { validateInput } from './validation.js';
 const checkFiles = () => {
   validateInput(process.argv);
   const directory = process.argv[2];
-  const searchingExpression = process.argv[3];
+  const searchedExpression = process.argv[3];
   const email = process.argv[4];
-  const command = `cd ${directory} && grep -i -lr --include=*.php ${searchingExpression}`;
+
+  // MacOS
+  // const command = `cd ${directory} && grep -i -lr --include=*.php ${searchedExpression}`;
+
+  // Windows
+  // const command = `powershell -Command "Set-Location -Path ${directory}; Get-ChildItem -Recurse -Include *.php | Select-String -Pattern ${searchedExpression} | Select-Object -ExpandProperty Path"`,
 
   // test settings:
   // const directory = localConfig.directory;
