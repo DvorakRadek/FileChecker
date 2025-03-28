@@ -3,27 +3,20 @@
 import { exec } from 'child_process';
 import { createOutput } from './helpers.js';
 import { handleFileList } from './handleData.js';
-// import { localConfig } from './config-local.js';
-import { validateInput } from './validation.js';
+import input from './handleInput.js';
+import { validatePath } from './validation.js';
+import { operatingSystem } from './helpers.js';
 
 const checkFiles = () => {
-  validateInput(process.argv);
-  const directory = process.argv[2];
-  const searchedExpression = process.argv[3];
-  const email = process.argv[4];
+  validatePath(input.path);
 
-  // MacOS
-  // const command = `cd ${directory} && grep -i -lr --include=*.php ${searchedExpression}`;
+  const command = {
+    Windows_NT: `powershell -Command "Set-Location -Path ${input.path}; Get-ChildItem -Recurse -Include *.php | Select-String -Pattern ${input.expression} | Select-Object -ExpandProperty Path"`,
+    Linux: `cd ${input.path} && grep -i -lr --include=*.php ${input.expression}`,
+    Darwin: `cd ${input.path} && grep -i -lr --include=*.php ${input.expression}`,
+  }
 
-  // Windows
-  // const command = `powershell -Command "Set-Location -Path ${directory}; Get-ChildItem -Recurse -Include *.php | Select-String -Pattern ${searchedExpression} | Select-Object -ExpandProperty Path"`,
-
-  // test settings:
-  // const directory = localConfig.directory;
-  // const email = localConfig.email;
-  // const command = localConfig.command;
-
-  exec(command, (error, stdout, stderr) => {
+  exec(command[operatingSystem], (error, stdout, stderr) => {
     if (error) {
         console.log(`error: ${error.message}`);
         return;
@@ -37,7 +30,7 @@ const checkFiles = () => {
       return;
     }
     const output = createOutput(stdout);
-    handleFileList(output, directory, email);
+    handleFileList(output, input);
   });
 }
  

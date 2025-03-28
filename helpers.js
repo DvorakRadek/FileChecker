@@ -1,3 +1,5 @@
+import { type } from 'node:os';
+
 export const printHelpAndExit = () => {
   console.error(`Usage:\ncheck-files 'path/to/your/directory' 'searched expression' 'email'`);
   console.error('Will find searched expression in all php files of provided directory and send them to email.');
@@ -25,3 +27,5 @@ export const getIp = async () => {
     console.error(error);
   }
 }
+
+export const operatingSystem = type();

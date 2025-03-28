@@ -1,21 +1,19 @@
 import { access } from 'node:fs';
-import { printHelpAndExit } from './helpers.js';
 
-export const validateInput = (inputs) => {
-  if (inputs[2] === '--help' || inputs.length < 5) {
-    printHelpAndExit();
-  }
-  
-  access(inputs[2], (err) => {
+export const validatePath = (path) => {
+  access(path, (err) => {
     if (err) {
-      console.log('Directory does not exist');
+      console.log(`Directory ${path} does not exist`);
       process.exit(1);
     }
+    console.log(`Directory ${path} exists`);
   });
+}
 
+export const validateEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(inputs[4])) {
-    console.log('Invalid email format');
-    process.exit(1);
+  if (!emailRegex.test(email)) {
+    return 'Invalid email format';
   }
+  return true;
 }
