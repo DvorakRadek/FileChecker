@@ -1,10 +1,12 @@
 import { access, writeFile, readFile, mkdir } from 'node:fs';
 import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 import CryptoJS from 'crypto-js';
 import { sendEmail } from './handleEmail.js';
 
 export const handleFileList = (newResultContent, directory, email) => {
-  access(`${process.env.TEMP}/Filechecker`, (err) => {
+  const tempDir = join(tmpdir(), 'Filechecker');
+  access(tempDir, (err) => {
     if (err) {
       console.log('Directory does not exist');
       mkdir(`${process.env.TEMP}/Filechecker`, { recursive: true }, (err) => {
@@ -16,7 +18,7 @@ export const handleFileList = (newResultContent, directory, email) => {
     }
   });
   
-  const resultFileName = join(process.env.TEMP, 'Filechecker', `${CryptoJS.MD5(directory).toString()}.txt`);
+  const resultFileName = join(tempDir, `${CryptoJS.MD5(directory).toString()}.txt`);
   
   access(resultFileName, (err) => {
     console.log(`${resultFileName} ${err ? 'does not exist' : 'already exists'}`);
