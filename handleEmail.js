@@ -11,7 +11,7 @@ export const sendEmail = async (files, email) => {
   });
   
   transporter.sendMail({
-      from: email,
+      from: `"File Checker" ${email}`,
       to: email,
       subject: 'Message',
       text: emailContent
