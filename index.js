@@ -8,7 +8,7 @@ import { validateInput } from './validation.js';
 const checkFiles = () => {
   validateInput(process.argv);
   const [, , directory, searchedExpression, email] = process.argv;
-  const command = `cd ${directory} && grep -i -lr --include=*.php ${searchedExpression}`;
+  const command = `cd ${directory} && grep -i -lr --include='*.php' '${searchedExpression}'`;
 
   exec(command, (error, stdout, stderr) => {
     if (error) {
