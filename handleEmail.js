@@ -11,10 +11,10 @@ export const sendEmail = async (files, email) => {
   });
   
   transporter.sendMail({
-      from: `"File Checker" ${email}`,
-      to: email,
-      subject: 'Message',
-      text: emailContent
+    from: 'noreply@example.com',
+    to: email,
+    subject: 'Message',
+    text: emailContent
   }, (err, info) => {
       if (err) {
           console.log(err);
