@@ -7,7 +7,7 @@ import { validateInput } from './validation.js';
 
 const checkFiles = () => {
   validateInput(process.argv);
-  const [, , directory, searchedExpression, email] = process.argv;
+  const [, , directory, tragetDirectory, searchedExpression, email] = process.argv;
   const command = `cd ${directory} && grep -i -lr --include=*.php ${searchedExpression}`;
 
   exec(command, (error, stdout, stderr) => {
@@ -24,7 +24,7 @@ const checkFiles = () => {
       return;
     }
     const output = createOutput(stdout);
-    handleFileList(output, directory, email);
+    handleFileList(output, directory, tragetDirectory, email);
   });
 }
  

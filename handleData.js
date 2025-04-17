@@ -1,22 +1,21 @@
 import { access, writeFile, readFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
-import { tmpdir } from 'node:os';
 import CryptoJS from 'crypto-js';
-import { sendEmail } from './handleEmail.js';
+// import { sendEmail } from './handleEmail.js';
 
-export const handleFileList = async (newResultContent, directory, email) => {
-  const tempDir = join(tmpdir(), 'Filechecker');
+export const handleFileList = async (newResultContent, directory, tragetDirectory, email) => {
+  const targetDir = join(tragetDirectory, 'Filechecker');
 
   try {
-    await access(tempDir);
+    await access(targetDir);
     console.log('Directory exists');
   } catch (err) {
     console.log('Directory does not exist, creating...');
-    await mkdir(tempDir, { recursive: true });
+    await mkdir(targetDir, { recursive: true });
     console.log('Directory created');
   }
   
-  const resultFileName = join(tempDir, `${CryptoJS.MD5(directory).toString()}.txt`);
+  const resultFileName = join(targetDir, `${CryptoJS.MD5(directory).toString()}.txt`);
   
   try {
     await access(resultFileName);
@@ -34,12 +33,12 @@ export const handleFileList = async (newResultContent, directory, email) => {
     await writeFile(resultFileName, newResultContent.join('\n'));
     console.log('file updated');
 
-    await sendEmail(diff, email);
+    // await sendEmail(diff, email);
   } catch {
     console.log(`${resultFileName} does not exist, creating...`);
     await writeFile(resultFileName, newResultContent.join('\n'));
     console.log('file created');
 
-    await sendEmail(newResultContent, email);
+    // await sendEmail(newResultContent, email);
   }
 }

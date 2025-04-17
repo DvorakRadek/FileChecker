@@ -1,6 +1,6 @@
 export const printHelpAndExit = () => {
-  console.error(`Usage:\ncheck-files 'path/to/your/directory' 'searched expression' 'email'`);
-  console.error('Will find searched expression in all php files of provided directory and send them to email.');
+  console.error(`Usage:\ncheck-files 'path/to/your/directory' 'path/to/directory to save result file' 'searched expression' 'email'`);
+  console.error('Will find searched expression in all php files of provided directory and save it in file.');
   process.exit(1);
 };
 

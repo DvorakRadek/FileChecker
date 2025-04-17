@@ -2,7 +2,7 @@ import { access } from 'node:fs/promises';
 import { printHelpAndExit } from './helpers.js';
 
 export const validateInput = async (inputs) => {
-  if (inputs[2] === '--help' || inputs.length < 5) {
+  if (inputs[2] === '--help' || inputs.length < 6) {
     printHelpAndExit();
   }
   
