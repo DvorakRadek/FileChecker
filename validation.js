@@ -2,7 +2,7 @@ import { access } from 'node:fs/promises';
 import { printHelpAndExit } from './helpers.js';
 
 export const validateInput = async (inputs) => {
-  if (inputs[2] === '--help' || inputs.length < 6) {
+  if (inputs[2] === '--help' || inputs.length < 5) {
     printHelpAndExit();
   }
   
@@ -13,9 +13,9 @@ export const validateInput = async (inputs) => {
     process.exit(1);
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(inputs[4])) {
-    console.log('Invalid email format');
-    process.exit(1);
-  }
+  // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // if (!emailRegex.test(inputs[4])) {
+  //   console.log('Invalid email format');
+  //   process.exit(1);
+  // }
 }

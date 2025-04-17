@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import CryptoJS from 'crypto-js';
 // import { sendEmail } from './handleEmail.js';
 
-export const handleFileList = async (newResultContent, directory, tragetDirectory, email) => {
+export const handleFileList = async (newResultContent, directory, tragetDirectory) => {
   const targetDir = join(tragetDirectory, 'Filechecker');
 
   try {
