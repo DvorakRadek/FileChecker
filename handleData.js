@@ -25,10 +25,7 @@ export const handleFileList = async (newResultContent, directory, tragetDirector
 
     const data = await readFile(resultFileName, 'utf-8');
     const previousResultContent = data.split('\n');
-    console.log('previousResultContent', previousResultContent);
-    console.log('newResultContent', newResultContent);
     const diff = newResultContent.filter(file => !previousResultContent.includes(file));
-    console.log('diff', diff);
 
     if (diff.length === 0) {
       console.log('No new files found');

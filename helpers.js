@@ -5,6 +5,7 @@ export const printHelpAndExit = () => {
 };
 
 export const createOutput = (stdout) => {
+  console.log('stdout', stdout);
   const output = [];
   const stdoutArray = stdout.trim().split('\r\n');
   stdoutArray.forEach(file => {
