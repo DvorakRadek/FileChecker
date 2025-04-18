@@ -5,7 +5,7 @@ import CryptoJS from 'crypto-js';
 
 export const handleFileList = async (newResultContent, directory, tragetDirectory) => {
   // Create terget directory if it does not exist - named by MD5 hash of the searched directory
-  const targetDir = join(tragetDirectory, 'Filechecker', CryptoJS.MD5(directory).toString());
+  const targetDir = join(tragetDirectory, 'Filechecker_results', CryptoJS.MD5(directory).toString());
 
   try {
     await access(targetDir);
