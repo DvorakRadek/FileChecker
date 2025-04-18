@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import CryptoJS from 'crypto-js';
 // import { sendEmail } from './handleEmail.js';
 
-export const handleFileList = async (newResultContent, directory, tragetDirectory) => {
+export const handleFileList = async (newResultContent, directory, tragetDirectory, searchedExpression) => {
   // Create terget directory if it does not exist - named by MD5 hash of the searched directory
   const targetDir = join(tragetDirectory, 'Filechecker_results', CryptoJS.MD5(directory).toString());
 
@@ -17,7 +17,7 @@ export const handleFileList = async (newResultContent, directory, tragetDirector
   }
   
   // Create result file name - named by MD5 hash of the searched directory - made in first run
-  const resultFileName = join(targetDir, `${CryptoJS.MD5(directory).toString()}.txt`);
+  const resultFileName = join(targetDir, `${searchedExpression}.txt`);
   
   try {
     await access(resultFileName);
@@ -36,7 +36,7 @@ export const handleFileList = async (newResultContent, directory, tragetDirector
     await writeFile(resultFileName, newResultContent.join('\n'));
     console.log('file updated');
     
-    const diffFileName = join(targetDir, `diff-${new Date().toISOString()}.txt`);
+    const diffFileName = join(targetDir, `diff-${searchedExpression}-${new Date().toISOString()}.txt`);
     await writeFile(diffFileName, diff.join('\n'));
     console.log('diff file created');
 

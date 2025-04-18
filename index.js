@@ -24,7 +24,7 @@ const checkFiles = () => {
       return;
     }
     const output = createOutput(stdout);
-    handleFileList(output, directory, tragetDirectory);
+    handleFileList(output, directory, tragetDirectory, searchedExpression);
   });
 }
  
