@@ -33,11 +33,12 @@ export const handleFileList = async (newResultContent, directory, tragetDirector
     }
 
     // In case of new files, append them to the result file and create diff file named by current date
-    const diffFileName = join(targetDir, `diff-${new Date().toISOString()}.txt`);
-
     await writeFile(resultFileName, newResultContent.join('\n'));
-    await writeFile(diffFileName, diff.join('\n'));
     console.log('file updated');
+    
+    const diffFileName = join(targetDir, `diff-${new Date().toISOString()}.txt`);
+    await writeFile(diffFileName, diff.join('\n'));
+    console.log('diff file created');
 
     // await sendEmail(diff, email);
   } catch {
