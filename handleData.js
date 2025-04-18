@@ -24,10 +24,10 @@ export const handleFileList = async (newResultContent, directory, tragetDirector
     console.log(`${resultFileName} already exists`);
 
     const data = await readFile(resultFileName, 'utf-8');
-    const previousResultContent = new Set(data.split('\n'));
+    const previousResultContent = data.split('\n');
     console.log('previousResultContent', previousResultContent);
     console.log('newResultContent', newResultContent);
-    const diff = newResultContent.filter(file => !previousResultContent.has(file));
+    const diff = newResultContent.filter(file => !previousResultContent.includes(file));
     console.log('diff', diff);
 
     if (diff.length === 0) {
