@@ -1,11 +1,10 @@
 import { access, writeFile, readFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import CryptoJS from 'crypto-js';
-// import { sendEmail } from './handleEmail.js';
 
-export const handleFileList = async (newResultContent, directory, tragetDirectory, searchedExpression) => {
-  // Create terget directory if it does not exist - named by MD5 hash of the searched directory
-  const targetDir = join(tragetDirectory, 'Filechecker_results', CryptoJS.MD5(directory).toString());
+export const handleFileList = async (newResultContent, directory, targetDirectory, searchedExpressions) => {
+  const targetDir = join(targetDirectory, 'Filechecker_results', CryptoJS.MD5(directory).toString());
+  const slugifiedExpressions = searchedExpressions.replaceAll("|", "-");
 
   try {
     await access(targetDir);
@@ -16,36 +15,31 @@ export const handleFileList = async (newResultContent, directory, tragetDirector
     console.log('Directory created');
   }
   
-  // Create result file name - named by MD5 hash of the searched directory - made in first run
-  const resultFileName = join(targetDir, `${searchedExpression}.txt`);
+  const resultFileName = join(targetDir, `${slugifiedExpressions}.txt`);
   
   try {
     await access(resultFileName);
     console.log(`${resultFileName} already exists`);
 
     const data = await readFile(resultFileName, 'utf-8');
-    const previousResultContent = data.split('\n');
-    const diff = newResultContent.filter(file => !previousResultContent.includes(file));
+    const previousResultContent = data ? new Set(data.split('\n')) : new Set();
+    const diff = newResultContent.filter(file => !previousResultContent.has(file));
 
     if (diff.length === 0) {
       console.log('No new files found');
       return;
     }
 
-    // In case of new files, append them to the result file and create diff file named by current date
     await writeFile(resultFileName, newResultContent.join('\n'));
     console.log('file updated');
     
-    const diffFileName = join(targetDir, `diff-${searchedExpression}-${new Date().toISOString()}.txt`);
+    const diffFileName = join(targetDir, `diff-${slugifiedExpressions}-${new Date().toISOString()}.txt`);
     await writeFile(diffFileName, diff.join('\n'));
     console.log('diff file created');
 
-    // await sendEmail(diff, email);
   } catch {
     console.log(`${resultFileName} does not exist, creating...`);
     await writeFile(resultFileName, newResultContent.join('\n'));
     console.log('file created');
-
-    // await sendEmail(newResultContent, email);
   }
 }

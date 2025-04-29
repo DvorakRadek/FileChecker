@@ -1,6 +1,6 @@
 export const printHelpAndExit = () => {
-  console.error(`Usage:\ncheck-files 'path/to/your/directory' 'path/to/directory to save result file' 'searched expression'`);
-  console.error('Will find searched expression in all php files of provided directory and save it in file.');
+  console.error(`Usage:\ncheck-files 'path/to/your/directory' 'path/to/directory to save the result file' 'file extension of files to search' 'searched expressions split by |'`);
+  console.error('Will find searched expression in files with provided extension in the directory and save it in result file. If executed as a cron job, it will create a diff file with new files found since the last run.');
   process.exit(1);
 };
 
@@ -13,15 +13,4 @@ export const createOutput = (stdout) => {
     };
   });
   return output;
-}
-
-export const getIp = async () => {
-  try {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    return data.ip;
-  }
-  catch (error) {
-    console.error(error);
-  }
 }
