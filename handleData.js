@@ -5,6 +5,7 @@ import CryptoJS from 'crypto-js';
 export const handleFileList = async (newResultContent, directory, targetDirectory, searchedExpressions) => {
   const targetDir = join(targetDirectory, 'Filechecker_results', CryptoJS.MD5(directory).toString());
   const slugifiedExpressions = searchedExpressions.replaceAll("|", "-");
+  const dateString = new Date().toISOString().substring(0, 10);
 
   try {
     await access(targetDir);
@@ -33,7 +34,7 @@ export const handleFileList = async (newResultContent, directory, targetDirector
     await writeFile(resultFileName, newResultContent.join('\n'));
     console.log('file updated');
     
-    const diffFileName = join(targetDir, `diff-${slugifiedExpressions}-${new Date().toISOString()}.txt`);
+    const diffFileName = join(targetDir, `diff-${slugifiedExpressions}-${dateString}.txt`);
     await writeFile(diffFileName, diff.join('\n'));
     console.log('diff file created');
 
