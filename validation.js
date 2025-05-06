@@ -9,7 +9,7 @@ export const validateInput = async (inputs) => {
   try {
     await access(inputs[2]);
   } catch (err) {
-    console.log('Directory does not exist');
+    console.log(`Directory ${inputs[2]} does not exist`);
     process.exit(1);
   }
 }
