@@ -1,5 +1,5 @@
 {
-  "name": "file-checker",
+  "name": "@dvorakradek/file-checker",
   "version": "1.0.0",
   "description": "Search for suspicious piece of code in your files",
   "main": "index.ts",
